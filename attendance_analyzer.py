@@ -84,12 +84,11 @@ def main():
     
     print(f" Successfully loaded data for {len(student_data)} students")
     
-    # Analyze attendance
     shortage_report = find_attendance_shortage(student_data,MIN_ATTENDANCE)
     
-    # Display results
     print_report(shortage_report)
     input("Press Enter to Exit")
 
 
 main()
+
