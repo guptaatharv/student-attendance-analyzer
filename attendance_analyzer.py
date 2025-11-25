@@ -1,6 +1,6 @@
 import csv
 
-def load_student_data(filename):
+def load_data(filename):
     students = {}
     
     try:
@@ -11,7 +11,7 @@ def load_student_data(filename):
             for row in csv_reader:
                 if not row or len(row) < 5:
                     continue
-                
+            
                 try:
                     reg_no = row[0].strip()
                     subject = row[1].strip()
@@ -19,13 +19,13 @@ def load_student_data(filename):
                     classes_left = int(row[3].strip())
                     total_classes = int(row[4].strip())
                     
-                    subject_info = [subject, attended, classes_left, total_classes]
+                    sub_info = [subject, attended, classes_left, total_classes]
                     
                     if reg_no not in students:
                         students[reg_no] = []
-                    students[reg_no].append(subject_info)
+                    students[reg_no].append(sub_info)
                 except:
-                    print(f"Skipping invalid row")
+                    print(f"Skipping")
                     continue
     
     except FileNotFoundError:
@@ -35,7 +35,7 @@ def load_student_data(filename):
     
     return students
 
-def find_attendance_shortage(students,MIN_ATTENDANCE):
+def find_shortage(students,minimum_attendance):
     
     shortage_list = {}
     
@@ -50,7 +50,7 @@ def find_attendance_shortage(students,MIN_ATTENDANCE):
             else:
                 attendance_percent = 0
             
-            if attendance_percent < MIN_ATTENDANCE:
+            if attendance_percent < minimum_attendance:
                 low_attendance_subjects.append(subject_name)
         
         if low_attendance_subjects:
@@ -58,37 +58,34 @@ def find_attendance_shortage(students,MIN_ATTENDANCE):
     
     return shortage_list
 
-def print_report(shortage_list):
+def print_output(shortage_list):
     
     if not shortage_list:
-        print("\n Excellent! All students have good attendance.")
-        print("   No one is below the 75% requirement.\n")
-        input("\nPress Enter to Exit...")
+        print(" No one is below the 75% ,requirement")
+        input("Press Enter to Exit...")
     else:
         print()
         for reg_no, subjects in shortage_list.items():
             subject_list = ", ".join(subjects)
-            print(f"{reg_no} has short att in subjects - {subject_list}")
+            print(f"{reg_no} has short attendance in subjects - {subject_list}")
         print()
 
 def main():
-    print("\n Student Attendance Analysis System")
+    print("Student Attendance System")
     
     filename = input("Enter CSV filename: ").strip()
-    MIN_ATTENDANCE = float(input("Enter Min. Attendance: "))
+    minimum_attendance = float(input("Enter Min. Attendance: "))
 
-    student_data = load_student_data(filename)
+    student_data = load_data(filename)
     
-    if student_data is None:
-        return
+    print(f"loaded data for {len(student_data)} student")
     
-    print(f" Successfully loaded data for {len(student_data)} students")
+    shortage_report = find_shortage(student_data,minimum_attendance)
     
-    shortage_report = find_attendance_shortage(student_data,MIN_ATTENDANCE)
-    
-    print_report(shortage_report)
+    print_output(shortage_report)
     input("Press Enter to Exit")
 
 
 main()
+
 
