@@ -56,8 +56,7 @@ Displays subjects where you're below threshold. If everything's fine, it just sa
 Enter CSV filename: Student_Data.csv
 Enter minimum attendance %: 75
 
-SHORTAGE ALERT for 25BCE10446:
-- Operating Systems: 68.37% (134/196 classes)
+25BCE10446 has short att in subjects - Operating Systems
 ```
 
 ## CSV Format
@@ -151,3 +150,4 @@ Use it however you want. If it helps you avoid attendance shortage, that's good 
 ---
 
 **Note:** I'm a first-year CS student at VIT, so this code is probably not perfect. If you find bugs or have suggestions, I'm always learning!
+
